@@ -1,10 +1,10 @@
-import FileComponent from "./components/FileComponent";
+import RecursiveComponent from "./components/RecursiveComponent";
+import { fileTree } from "./data/fileTree";
 
 function App() {
   return (
-    <div>
-      <FileComponent filename={"index.tsx"} />
-      <FileComponent filename={"index.html"} />
+    <div className="my-5">
+      <RecursiveComponent fileTree={fileTree} />
     </div>
   );
 }
