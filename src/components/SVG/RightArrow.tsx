@@ -1,4 +1,4 @@
-function RightArrowIcon() {
+function RightArrow() {
   return (
     <svg
       aria-hidden="true"
@@ -14,4 +14,4 @@ function RightArrowIcon() {
   );
 }
 
-export default RightArrowIcon;
+export default RightArrow;
