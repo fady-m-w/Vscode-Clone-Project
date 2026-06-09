@@ -1,9 +1,8 @@
 import { useState } from "react";
 import type { IFile } from "../interfaces";
-import FileIcon from "./SVG/File";
 import RightArrow from "./SVG/RightArrow";
 import BottomArrow from "./SVG/BottomArrow";
-import FolderIcon from "./SVG/Folder";
+import RenderFileIcon from "./RenderFileIcon";
 
 interface Iprops {
   fileTree: IFile;
@@ -13,7 +12,7 @@ const RecursiveComponent = ({
   fileTree: { isFolder, name, children },
 }: Iprops) => {
   // ** STATES
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   // ** HANDLERS
   const toggle = () => setIsOpen((prev) => !prev);
@@ -23,15 +22,23 @@ const RecursiveComponent = ({
       <div onClick={toggle} className="flex items-center mb-1 select-none">
         {isFolder ? (
           <div className="flex items-center">
-            {isOpen ? <BottomArrow /> : <RightArrow />}
-            <FolderIcon />
+            <span className="mr-1">
+              {isOpen ? <BottomArrow /> : <RightArrow />}
+            </span>
+
+            <RenderFileIcon
+              filename={name}
+              isFolder={isFolder}
+              isOpen={isOpen}
+            />
+            <span className="ml-1">{name}</span>
           </div>
         ) : (
-          <span className="mr-2">
-            <FileIcon />
-          </span>
+          <div className="flex items-center ml-2">
+            <RenderFileIcon filename={name} />
+            <span className="ml-2">{name}</span>
+          </div>
         )}
-        <span>{name}</span>
       </div>
 
       {children &&
