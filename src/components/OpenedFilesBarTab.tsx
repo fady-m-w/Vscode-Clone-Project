@@ -26,7 +26,21 @@ const OpenedFilesBarTab = ({ file }: Iprops) => {
 
   const onRemove = (selectedId: string) => {
     const filtered = openedFiles.filter((file) => file.id !== selectedId);
-    const { name, content, id } = filtered[filtered.length - 1];
+    const lastTab = filtered[filtered.length - 1];
+
+    if (!lastTab) {
+      dispatch(setOpenedFiles([]));
+      dispatch(
+        setClickedFile({
+          activeTabId: null,
+          filecontent: "",
+          filename: "",
+        }),
+      );
+      return;
+    }
+
+    const { name, content, id } = lastTab;
     dispatch(setOpenedFiles(filtered));
     dispatch(
       setClickedFile({

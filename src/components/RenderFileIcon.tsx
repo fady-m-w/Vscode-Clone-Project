@@ -10,7 +10,6 @@ interface Iprops {
 
 const RenderFileIcon = ({ filename, isFolder, isOpen }: Iprops) => {
   const extension = filename.split(".").pop();
-  console.log(extension);
 
   if (extension && Object.hasOwn(extensionIconPaths, extension)) {
     const iconPath = isFolder
