@@ -4,7 +4,7 @@ import RightArrow from "./SVG/RightArrow";
 import BottomArrow from "./SVG/BottomArrow";
 import RenderFileIcon from "./RenderFileIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveTabId, setOpenedFiles } from "../app/features/fileTreeSlice";
+import { setClickedFile, setOpenedFiles } from "../app/features/fileTreeSlice";
 import type { RootState } from "../app/store";
 import { doesFileObjExist } from "../utils/functions";
 
@@ -13,7 +13,7 @@ interface Iprops {
 }
 
 const RecursiveComponent = ({ fileTree }: Iprops) => {
-  const { id, isFolder, name, children } = fileTree;
+  const { id, isFolder, name, children, content } = fileTree;
   const dispatch = useDispatch();
   const { openedFiles } = useSelector((state: RootState) => state.Tree);
 
@@ -24,13 +24,15 @@ const RecursiveComponent = ({ fileTree }: Iprops) => {
   const toggle = () => setIsOpen((prev) => !prev);
   const onFileClicked = () => {
     const exists = doesFileObjExist(openedFiles, id);
+    dispatch(
+      setClickedFile({ filename: name, filecontent: content, activeTabId: id }),
+    );
     if (exists) return;
     dispatch(setOpenedFiles([...openedFiles, fileTree]));
-    dispatch(setActiveTabId(id));
   };
 
   return (
-    <div className="mb-2 ml-2 cursor-pointer">
+    <div className="w-lg mb-2 ml-2 cursor-pointer">
       <div onClick={toggle} className="flex items-center mb-1 select-none">
         {isFolder ? (
           <div className="flex items-center">
